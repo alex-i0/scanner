@@ -11,14 +11,15 @@ import { Field, Label } from '@/components/catalyst/fieldset';
 export const Modal = ({ isOpen, setIsOpen, data }: any) => {
     return (
         <Dialog open={isOpen} onClose={setIsOpen}>
-            <DialogTitle>Refund payment</DialogTitle>
+            <DialogTitle>Scanning results</DialogTitle>
             <DialogDescription>
-                The refund will be reflected in the customer’s bank account 2 to
-                3 business days after processing.
+                Below, you&apos;ll find the link obtained from the QR code along
+                with its safety status, letting you know whether it&apos;s safe
+                to access.
             </DialogDescription>
             <DialogBody>
                 <Field>
-                    <Label>Amount</Label>
+                    <Label>Link: </Label>
                     <span>{data}</span>
                 </Field>
             </DialogBody>
@@ -26,7 +27,7 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                 <Button plain onClick={() => setIsOpen(false)}>
                     Cancel
                 </Button>
-                <Button onClick={() => setIsOpen(false)}>Refund</Button>
+                <Button onClick={() => setIsOpen(false)}>Access link</Button>
             </DialogActions>
         </Dialog>
     );
