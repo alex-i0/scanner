@@ -5,6 +5,7 @@ import { QrReader } from "react-qr-reader";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 import Link from "next/link";
+import { Button } from "@/components/catalyst/button";
 
 export default function Scan() {
   const router = useRouter();
@@ -56,9 +57,10 @@ export default function Scan() {
           </div>
           <Link
             href={`/`}
-            className=" bg-yellow-200 m-4 text-md rounded-md px-4 py-2 hover:underline"
           >
-            Back to home..
+            <Button color="indigo">
+            Back
+            </Button>
           </Link>
           {showModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
