@@ -17,7 +17,10 @@ export default function Scan() {
     if (!!result) {
       setData(result?.text);
       setShowModal(true);
-      qrRef?.current?.stop();
+      if( qrRef?.current) {
+        // qrRef.current.stop();
+      }
+
     }
 
     if (!!error) {
@@ -26,8 +29,8 @@ export default function Scan() {
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    router.reload();
+    // setShowModal(false);
+    // router.reload();
   };
 
   const handleOK = async () => {
@@ -51,8 +54,8 @@ export default function Scan() {
               className="lg:h-[400px] lg:w-[400px] h-[300px] w-[300px]"
               onResult={handleScan}
               constraints={{ facingMode: "environment" }}
-              style={{ width: "40%", height: "40%" }}
-              ref={qrRef}
+              // style={{ width: "40%", height: "40%" }}
+              // ref={qrRef}
             />
           </div>
           <Link
