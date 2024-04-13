@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import { useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { Button } from '@/components/catalyst/button';
 import { Routes } from '@/const';
@@ -9,16 +9,11 @@ import { Modal } from '@/components/Modal';
 const Scan = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [data, setData] = useState('No result');
-    const qrRef = useRef(null);
 
     const handleScan = (result: any, error: any) => {
-        if (!!error) console.info(error);
-
-        if (!result) return;
+        if (!!error && !result) return console.info(error);
         setData(result?.text);
         setIsOpen(true);
-
-        qrRef.current.stop();
     };
 
     return (
@@ -28,10 +23,13 @@ const Scan = () => {
                     <h1 className="mb-4 text-4xl font-bold">QR Scanner</h1>
                     <div>
                         <QrReader
-                            className="h-[300px] w-[300px] rounded-md lg:h-[400px] lg:w-[400px]"
+                            className="w-[300px] lg:w-[400px]"
                             onResult={handleScan}
                             constraints={{ facingMode: 'environment' }}
-                            ref={qrRef}
+                            videoStyle={{
+                                borderRadius: '15px',
+                                height: 'auto',
+                            }}
                         />
                     </div>
                     <Button color="indigo" href={Routes.HOME}>
