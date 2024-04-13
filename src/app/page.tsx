@@ -1,20 +1,29 @@
 import { Button } from "@/components/catalyst/button";
-import Link from "next/link";
+import { Routes } from "@/const";
 
-
-export default function Home() {
+const Home = () => {
   return (
-    <main className="flex flex-col h-screen justify-center items-center">
-    <div className="flex flex-col lg:flex-row">
-      <Link
-        href={`/scan`}
-      >
-        <Button color="indigo">
+    <div className="bg-indigo-700 h-screen flex flex-col justify-center items-center">
+    <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
+      <div className="mx-auto max-w-2xl text-center">
+        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        Scan with Confidence.
+          <br />
+          Verify QR Codes Instantly.
+        </h2>
+        <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-indigo-200">
+        Ensure every QR code you scan is safe before you click. Protect yourself from malicious links with real-time security checks.
+        </p>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+
+        <Button color="white" href={Routes.SCAN}>
           QR Scan
         </Button>
-
-      </Link>
+        </div>
+      </div>
     </div>
-  </main>
+  </div>
   );
 }
+
+export default Home;

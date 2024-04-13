@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import Head from "next/head";
 import Link from "next/link";
 import { Button } from "@/components/catalyst/button";
+import { Routes } from "@/const";
 
-export default function Scan() {
+ const Scan = () => {
   const router = useRouter();
   const [data, setData] = useState("No result");
   const [showModal, setShowModal] = useState(false);
@@ -59,7 +60,7 @@ export default function Scan() {
             />
           </div>
           <Link
-            href={`/`}
+            href={Routes.HOME}
           >
             <Button color="indigo">
             Back
@@ -90,3 +91,5 @@ export default function Scan() {
     </>
   );
 }
+
+export default Scan;
