@@ -10,8 +10,8 @@ const Scan = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [data, setData] = useState('No result');
 
-    const handleScan = (result: any, error: any) => {
-        if (!!error && !result) return console.info(error);
+    const handleScan = async (result: any, error: any) => {
+        if (!!error && !result) return;
         setData(result?.text);
         setIsOpen(true);
     };
