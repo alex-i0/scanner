@@ -1,5 +1,4 @@
 import OpenAI from 'openai';
-import { ChatCompletionMessageParam } from 'openai/resources';
 
 const configuration = {
     organization: 'org-mcVmZqH5liO68x06cQzCN8Ff',
@@ -18,7 +17,7 @@ export const getOpenAiResults = async (
     userPrompt: string,
     max_tokens = 460
 ) => {
-    const messages: ChatCompletionMessageParam[] = [
+    const messages = [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
     ];
