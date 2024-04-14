@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 const configuration = {
     organization: 'org-mcVmZqH5liO68x06cQzCN8Ff',
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY || '',
 };
 
 const openai = new OpenAI(configuration);
@@ -17,13 +17,13 @@ export const getOpenAiResults = async (
     userPrompt: string,
     max_tokens = 460
 ) => {
-    const messages = [
+    const messages: any = [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
     ];
 
     const filteredMessages = messages.filter(
-        (message) => message.content !== ''
+        (message: any) => message.content !== ''
     );
 
     return await openai.chat.completions.create({
