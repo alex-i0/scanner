@@ -42,7 +42,9 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                 alert(error);
             });
     };
-    const { probability } = JSON.parse(response);
+
+    console.log(response);
+    const parsedJson = JSON.parse(response);
 
     const getClasses = (
         probability: string
@@ -60,6 +62,9 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                 return 'green';
         }
     };
+
+    const receivedResponse = Object.keys(response).length === 0;
+
     return (
         <Dialog open={isOpen} onClose={setIsOpen}>
             <DialogTitle>Scanning results</DialogTitle>
@@ -75,11 +80,11 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                         <Code>{data}</Code>
                     </Text>
                 </Field>
-                {response ? (
+                {!!parsedJson.probability ? (
                     <Field>
-                        <Label>Safety status: </Label>
-                        <Badge color={`${getClasses(probability)}`}>
-                            {probability}
+                        <Label>Safety risk: </Label>
+                        <Badge color={`${getClasses(parsedJson.probability)}`}>
+                            {parsedJson.probability}
                         </Badge>
                     </Field>
                 ) : null}
@@ -88,7 +93,7 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                 <Button plain onClick={() => setIsOpen(false)}>
                     Cancel
                 </Button>
-                {!!response ? (
+                {!!parsedJson.probability ? (
                     <Button plain href={data}>
                         Proceed
                     </Button>
@@ -97,8 +102,6 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                         Analyze
                     </Button>
                 )}
-
-                {/* <Button onClick={() => setIsOpen(false)}>Access link</Button> */}
             </DialogActions>
         </Dialog>
     );
