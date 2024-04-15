@@ -13,9 +13,11 @@ import { useState } from 'react';
 import { systemPrompt } from '@/const/prompts';
 import { Badge } from '../catalyst/badge';
 import { Text, Code } from '../catalyst/text';
+import { links } from '@/data/links';
 
 export const Modal = ({ isOpen, setIsOpen, data }: any) => {
     const [response, setResponse] = useState('{}');
+    const [isMaliciousLink, setIsMaliciousLink] = useState(false);
 
     const handleOpenaiAnalysis = async () => {
         if (!data) return;
@@ -24,8 +26,6 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
             systemPrompt,
             userPrompt: data,
         });
-
-        console.log(body);
 
         await fetch('/api/analyze-link', {
             method: 'POST',
@@ -43,8 +43,22 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
             });
     };
 
-    console.log(response);
     const parsedJson = JSON.parse(response);
+
+    const checkDataset = (e: any) => {
+        console.log('checkDataset');
+        console.log(links[0].url, data);
+        links.forEach((link) => {
+            if (
+                link.url === data ||
+                `http://${link.url}` === data ||
+                `https://${link.url}` === data
+            ) {
+                console.log(true);
+                setIsMaliciousLink(true);
+            }
+        });
+    };
 
     const getClasses = (
         probability: string
@@ -62,8 +76,6 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                 return 'green';
         }
     };
-
-    const receivedResponse = Object.keys(response).length === 0;
 
     return (
         <Dialog open={isOpen} onClose={setIsOpen}>
@@ -88,6 +100,12 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                         </Badge>
                     </Field>
                 ) : null}
+                {isMaliciousLink ? (
+                    <Field>
+                        <Label>Safety risk: </Label>
+                        <Badge color={`red`}>{'Malicious link detected'}</Badge>
+                    </Field>
+                ) : null}
             </DialogBody>
             <DialogActions>
                 <Button plain onClick={() => setIsOpen(false)}>
@@ -98,7 +116,7 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                         Proceed
                     </Button>
                 ) : (
-                    <Button plain onClick={handleOpenaiAnalysis}>
+                    <Button plain onClick={checkDataset}>
                         Analyze
                     </Button>
                 )}
