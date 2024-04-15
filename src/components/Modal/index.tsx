@@ -46,8 +46,7 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
     const parsedJson = JSON.parse(response);
 
     const checkDataset = (e: any) => {
-        console.log('checkDataset');
-        console.log(links[0].url, data);
+        let isMalicous = false;
         links.forEach((link) => {
             if (
                 link.url === data ||
@@ -56,8 +55,13 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
             ) {
                 console.log(true);
                 setIsMaliciousLink(true);
+                isMalicous = true;
             }
         });
+
+        if (!isMalicous) {
+            handleOpenaiAnalysis();
+        }
     };
 
     const getClasses = (
@@ -75,6 +79,16 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
             default:
                 return 'green';
         }
+    };
+
+    const clearState = () => {
+        setIsOpen(false);
+        setResponse('{}');
+        setIsMaliciousLink(false);
+    };
+
+    const getProceedColor = (): any => {
+        return isMaliciousLink ? 'red' : undefined;
     };
 
     return (
@@ -108,11 +122,11 @@ export const Modal = ({ isOpen, setIsOpen, data }: any) => {
                 ) : null}
             </DialogBody>
             <DialogActions>
-                <Button plain onClick={() => setIsOpen(false)}>
+                <Button plain onClick={clearState}>
                     Cancel
                 </Button>
-                {!!parsedJson.probability ? (
-                    <Button plain href={data}>
+                {!!parsedJson.probability || isMaliciousLink ? (
+                    <Button plain href={data} color={getProceedColor()}>
                         Proceed
                     </Button>
                 ) : (
